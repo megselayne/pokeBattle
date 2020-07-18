@@ -1,0 +1,64 @@
+
+.battle{
+    display: flex;
+    justify-content: space-between;
+    max-width: 700px;
+}
+
+img{
+    height: auto;
+    width:200px;
+}
+
+h1{
+    color:blue;
+}
+.battle-click{
+    background-color: red;
+    color:white;
+    height:50px;
+    width:70px;
+    padding:10px;
+    border-radius: 5px;
+}
+.attack-vis{
+    position: absolute;
+    top:15%;
+    left:15%;
+    /* width:50px;
+    height:30px; */
+    display: none;
+    background-color: blue;
+    /* animation: attack-s 4s; */
+}
+
+/* keyframes keyword, animation name */
+@keyframes attack-s{
+    /* description of the animation */
+    0% {
+      /* the beginning state of the animation */
+      width:50px;
+      height:30px;
+      background-color: blue;
+    }
+    50% {
+        width:250px;
+        height:30px;
+        background-color: blue;
+    }
+    75%{
+        width:350px;
+        height:30px;
+        background-color: blue;
+    }
+    99% {
+        /* the ending state of the animation */
+          width:500px;
+          height:30px;
+          background-color: blue;
+      }
+    100% {
+      /* the ending state of the animation */
+        display:none;
+    }
+  } 
