@@ -22,7 +22,7 @@ const actionStart =()=>{
         //add back after delay
         setTimeout(function(){
             attackVis.classList.add('animation');
-        },1000 *3);
+        },1000 *1);
     }
     
 };
