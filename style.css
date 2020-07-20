@@ -1,35 +1,56 @@
-
+/* @import url('db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon'); */
 .battle{
     display: flex;
-    justify-content: space-between;
-    max-width: 700px;
+    flex-direction: column;
+    font-family: 'Pokemon Solid';
+}
+div .title-text{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.competitors{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 img{
     height: auto;
-    width:200px;
+    width:300px;
 }
 
-h1{
-    color:blue;
+h2{
+    font-size: 35px;
+}
+.battle-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #D3D3D3;
+    border-radius: 5px;
+    max-width: 50%;
+    min-height: 200px;
 }
 .battle-click{
     background-color: red;
+    border: none;
     color:white;
+    font-size: 20px;
     height:50px;
-    width:70px;
+    width:100px;
     padding:10px;
     border-radius: 5px;
+    margin: 5px 30px;
 }
-.attack-vis{
+.attack-vis.animation{
     position: absolute;
     top:15%;
     left:15%;
     /* width:50px;
     height:30px; */
-    display: none;
     background-color: blue;
-    /* animation: attack-s 4s; */
+    animation: attack-s 4s;
 }
 
 /* keyframes keyword, animation name */
