@@ -16,20 +16,32 @@ div .title-text{
 }
 
 img{
-    height: 300px;
-    width:auto;
+    height: auto;
+    width:300px;
 }
 
-h1{
-    color:blue;
+h2{
+    font-size: 35px;
+}
+.battle-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #D3D3D3;
+    border-radius: 5px;
+    max-width: 50%;
+    min-height: 200px;
 }
 .battle-click{
     background-color: red;
+    border: none;
     color:white;
+    font-size: 20px;
     height:50px;
-    width:70px;
+    width:100px;
     padding:10px;
     border-radius: 5px;
+    margin: 5px 30px;
 }
 .attack-vis.animation{
     position: absolute;

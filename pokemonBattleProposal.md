@@ -15,7 +15,11 @@
 
 ## Initial thoughts on game structure
 
-(Write out what challenges you expect to encounter, or ideas you want to come up with)
+- I've largely written this in the next section.
+- I'll need to figure the data structures for the pokemon, particularly determining the rival's pokemon based on user selection type weakness.
+- I think the biggest part, again, is figuring out how to create and store the game data to be accessed during battle.
+- I'm not too worried about the DOM manipulation. I figured out how to repeat my attack animtion on click, and that was one of my biggest "blind spots".
+- If there's time, I think it could be cool to do a visual representation of HP (life), rather than just a number. It could be represented on % of total hp. Showing that decreasing could be very visually compelling.
 
 ## Phases of Completion
 
@@ -55,6 +59,7 @@
 ## Links and Resources
 
 (Anything you've looked up so far or are thinking about using.)
+- See Assets folder for starter pokemon png designs.
 - Technical spec (in-progress):
 - Select Starter
     - 3 pokemon images centered on page in flex container
