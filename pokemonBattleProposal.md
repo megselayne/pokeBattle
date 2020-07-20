@@ -59,6 +59,7 @@
 ## Links and Resources
 
 (Anything you've looked up so far or are thinking about using.)
+- Trello Board: https://trello.com/b/IPFKtLzD
 - See Assets folder for starter pokemon png designs.
 - Technical spec (in-progress):
 - Select Starter
