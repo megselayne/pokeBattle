@@ -1,7 +1,7 @@
 //variable declarations
 const attackButton = document.querySelector('.battle-click');
 const battleVis = document.querySelector('.attack-vis');
-const pokeStarters = document.querySelectorAll('.poke');
+const pokeStarters = document.querySelectorAll('img.poke');
 const titles = document.querySelector('h2.title-text');
 const titles2 = document.querySelector('h3.title-text');
 const attackVis = document.querySelector('.attack-vis');
@@ -97,11 +97,17 @@ const gameObject ={
         for(let i of Object.keys(this.starters)){
             if(this.starters[i].type === userWeakness){
                 this.rival.starterName = this.starters[i].name;
-                this.rival.starterElement = this.starters[i];
+                this.rival.starterElement = document.querySelector(`.${i}`);
             }
         }
         console.log(this.rival.starterName);
+        document.querySelector(`img#${this.rival.starterName}`).classList.add('selected');
         titles2.innerHTML = `Your Rival chose ${this.rival.starterName}`;
+        pokeStarters.forEach(element =>{
+           if(!element.classList.contains('selected')){
+               element.style.display = 'none';
+           }
+       })
     }
 }
 
@@ -125,6 +131,7 @@ const selectStarter = (event)=>{
     console.log('pokemon selected!')
     gameObject.readyPlayerOne.starterName = event.target.getAttribute('id');
     gameObject.readyPlayerOne.starterElement = event.target;
+    event.target.classList.add('selected');
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
