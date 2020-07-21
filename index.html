@@ -10,25 +10,27 @@
                 <h3 class = 'title-text'></h3>
             </div>
             <div class = 'competitors'>
-                <div class='img-container poke squirtle''>
-                    <img id='squirtle'src='./assets/squirtle.png'/>
+                <div class='img-container pokemon squirtle''>
+                    <img class ='poke' id='squirtle'src='./assets/squirtle.png'/>
                 </div>
                 <div class ='attack-vis'></div>
-                <div class='img-container poke charmander'>
-                    <img id='charmander' src='./assets/charmander.png'/>
+                <div class='img-container pokemon charmander'>
+                    <img class ='poke'id='charmander' src='./assets/charmander.png'/>
                 </div>
-                <div class='img-container poke bulbasaur'>
-                    <img id='bulbasaur' src='./assets/bulbasaur.png'/>
+                <div class='img-container pokemon bulbasaur'>
+                    <img class ='poke' id='bulbasaur' src='./assets/bulbasaur.png'/>
                 </div>
             </div>
         </div>  
         <div class ='battle-box' id='battle-box'>
-            <button type='button' class="battle-click">
-                Fight
-            </button>
-            <button type='button' class="battle-click">
-                Run
-            </button>
+            <div class = 'battle-buttons'>
+                <button type='button' class="battle-click" id='fight'>
+                    Fight
+                </button>
+                <button type='button' class="battle-click" id='run'>
+                    Run
+                </button>
+            </div>
         </div>
     </body>
     <script src='./app.js'>
