@@ -9,6 +9,7 @@ const competitors = document.querySelector('.competitors');
 const battleBox = document.querySelector('.battle-box');
 const battleButtonFight = document.querySelector('#fight');
 const battleButtonRun = document.querySelector('#run');
+const movesetHolder = document.createElement('ul');
 //game object
 const gameObject ={
     turn: 'readyPlayerOne',
@@ -107,6 +108,7 @@ const gameObject ={
             competitors.style.justifyContent = 'space-between';
             gameObject.readyPlayerOne.starterElement.style.order = '-1';
             battleBox.style.display = 'flex';
+            battleBox.style.justifyContent = 'flex-start';
             battleButtonRun.style.display = '';
         },1000 *3)
     },
@@ -121,7 +123,7 @@ const gameObject ={
             }
         }
         console.log(this.rival.starterObject);
-        this.rival.starterElement.classList.add('selected');
+        this.rival.starterElement.classList.add('selected','rival');
         titles2.innerHTML = `Your Rival chose ${this.rival.starterObject.name}`;
         pokeStarters.forEach(element =>{
            if(!element.classList.contains('selected')){
@@ -138,8 +140,9 @@ const gameObject ={
         //use for.each to create list items in unordered list
         //flex column
         battleButtonRun.style.display = 'none';
+        battleButtonFight.style.display = '';
+        battleBox.style.justifyContent = 'flex-start';
         console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
-        const movesetHolder = document.createElement('ul');
         const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
         movesetHolder.classList.add('moveset-holder');
         // movesetHolder.style.display = 'flex';
@@ -154,8 +157,19 @@ const gameObject ={
     }
 }
 
-const actionStart =()=>{
+const actionStart =(event)=>{
     console.log('heard the click');
+    movesetHolder.style.display = 'none';
+    battleButtonFight.style.display = 'none';
+    const newH2 = document.createElement('h2');
+    battleBox.style.justifyContent = 'center';
+    battleBox.append(newH2);
+    if(event){
+        newH2.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
+    }
+    else{
+        (console.log(`no event, it's rivals turn.`))
+    }
     if(! attackVis.classList.contains('animation')){
         console.log('knows it does not contain');
         attackVis.classList.add('animation');
@@ -175,7 +189,7 @@ const selectStarter = (event)=>{
     const id = event.target.getAttribute('id');
     gameObject.readyPlayerOne.starterName = event.target.getAttribute('id');
     gameObject.readyPlayerOne.starterElement = event.target.parentNode;
-    event.target.parentNode.classList.add('selected');
+    event.target.parentNode.classList.add('selected','readyPlayerOne');
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
