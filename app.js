@@ -114,6 +114,12 @@ const gameObject ={
             }
         }
         console.log(this.rival.starterName);
+        for(let i of Object.keys(this.starters)){
+            if(this.starters[i].name === this.rival.starterName){
+                this.rival.moveset = this.starters[i].moveset;
+                console.log(this.rival.moveset);
+            }
+        }
         this.rival.starterElement.classList.add('selected');
         titles2.innerHTML = `Your Rival chose ${this.rival.starterName}`;
         pokeStarters.forEach(element =>{
@@ -155,6 +161,12 @@ const selectStarter = (event)=>{
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
+    for(let i of Object.keys(gameObject.starters)){
+        if(gameObject.starters[i].name === id){
+            gameObject.readyPlayerOne.moveset = gameObject.starters[i].moveset;
+            console.log(gameObject.readyPlayerOne.moveset);
+        }
+    }
     gameObject.selection();
 }
 //event listeners
