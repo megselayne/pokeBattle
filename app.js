@@ -12,6 +12,10 @@ const battleButtonRun = document.querySelector('#run');
 const movesetHolder = document.createElement('ul');
 const readyPlayerOneProfile = document.createElement('div');
 const rivalProfile = document.createElement('div');
+const userProfilePName = document.createElement('h3');
+const userProfileHP = document.createElement('h4');
+const rivalProfilePName = document.createElement('h3');
+const rivalProfileHP = document.createElement('h4');
 //game object
 const gameObject ={
     turn: 'readyPlayerOne',
@@ -114,17 +118,13 @@ const gameObject ={
             battleButtonRun.style.display = '';
             //profiles user
             gameObject.readyPlayerOne.starterElement.appendChild(readyPlayerOneProfile);
-            const userProfilePName = document.createElement('h3');
             userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
-            const userProfileHP = document.createElement('h4');
             userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
             readyPlayerOneProfile.appendChild(userProfilePName);
             readyPlayerOneProfile.appendChild(userProfileHP);
            //profiles rival
            gameObject.rival.starterElement.appendChild(rivalProfile);
-            const rivalProfilePName = document.createElement('h3');
             rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
-            const rivalProfileHP = document.createElement('h4');
             rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
             rivalProfile.appendChild(rivalProfilePName);
             rivalProfile.appendChild(rivalProfileHP);
@@ -182,13 +182,6 @@ const actionStart =(event)=>{
     const newH2 = document.createElement('h2');
     battleBox.style.justifyContent = 'center';
     battleBox.append(newH2);
-    if(event){
-        newH2.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
-         //decrement hp
-    }
-    else{
-        (console.log(`no event, it's rivals turn.`))
-    }
     if(! attackVis.classList.contains('animation')){
         console.log('knows it does not contain');
         attackVis.classList.add('animation');
@@ -199,6 +192,15 @@ const actionStart =(event)=>{
         setTimeout(function(){
             attackVis.classList.add('animation');
         },1000 *1);
+    }
+    if(event){
+        newH2.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
+         //decrement hp
+        gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
+        rivalProfileHP.innerText = gameObject.rival.starterObject.hp;
+    }
+    else{
+        (console.log(`no event, it's rivals turn.`))
     }
    
 
