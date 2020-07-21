@@ -11,6 +11,14 @@ const battleButtonFight = document.querySelector('#fight');
 const battleButtonRun = document.querySelector('#run');
 //game object
 const gameObject ={
+    turn: 'readyPlayerOne',
+    whoseTurn(){
+        if(this.turn === 'rival'){
+            this.turn = 'readyPlayerOne';
+        }else{
+            this.turn = 'rival';
+        }
+    },
     types: {
         grass:{
             weakness: 'fire',
@@ -86,13 +94,11 @@ const gameObject ={
         }
     },
     readyPlayerOne:{
-        starterName: null,
-        starterElement: null,
+        starterObject: null,
 
     },
     rival:{
-        starterName: null,
-        starterElement: null,
+        starterObject: null,
     },
     battleCommence(){
         setTimeout(function(){
@@ -101,27 +107,22 @@ const gameObject ={
             competitors.style.justifyContent = 'space-between';
             gameObject.readyPlayerOne.starterElement.style.order = '-1';
             battleBox.style.display = 'flex';
+            battleButtonRun.style.display = '';
         },1000 *3)
     },
     selection(){
-        titles.innerHTML = `You chose ${this.readyPlayerOne.starterName}`;
+        titles.innerHTML = `You chose ${this.readyPlayerOne.starterObject.name}`;
         const userWeakness = this.starters[this.readyPlayerOne.starterName].weakness;
         console.log(userWeakness);
         for(let i of Object.keys(this.starters)){
             if(this.starters[i].type === userWeakness){
-                this.rival.starterName = this.starters[i].name;
+                this.rival.starterObject = this.starters[i];
                 this.rival.starterElement = document.querySelector(`.${i}`);
             }
         }
-        console.log(this.rival.starterName);
-        for(let i of Object.keys(this.starters)){
-            if(this.starters[i].name === this.rival.starterName){
-                this.rival.moveset = this.starters[i].moveset;
-                console.log(this.rival.moveset);
-            }
-        }
+        console.log(this.rival.starterObject);
         this.rival.starterElement.classList.add('selected');
-        titles2.innerHTML = `Your Rival chose ${this.rival.starterName}`;
+        titles2.innerHTML = `Your Rival chose ${this.rival.starterObject.name}`;
         pokeStarters.forEach(element =>{
            if(!element.classList.contains('selected')){
                element.style.display = 'none';
@@ -133,6 +134,23 @@ const gameObject ={
     selectBattle(){
         console.log('heard you click Fight!');
         //open moveset box
+        //selects move keys ie ['tackle','ember','slash'] for movelist.
+        //use for.each to create list items in unordered list
+        //flex column
+        battleButtonRun.style.display = 'none';
+        console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
+        const movesetHolder = document.createElement('ul');
+        const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
+        movesetHolder.classList.add('moveset-holder');
+        // movesetHolder.style.display = 'flex';
+        // movesetHolder.style.flexDirection = 'column';
+        battleBox.appendChild(movesetHolder);
+        moveset.forEach(element =>{
+            const newLi = document.createElement('li');
+            newLi.innerText = element;
+            newLi.addEventListener('click',actionStart);
+            movesetHolder.append(newLi);
+        })
     }
 }
 
@@ -163,8 +181,8 @@ const selectStarter = (event)=>{
     })
     for(let i of Object.keys(gameObject.starters)){
         if(gameObject.starters[i].name === id){
-            gameObject.readyPlayerOne.moveset = gameObject.starters[i].moveset;
-            console.log(gameObject.readyPlayerOne.moveset);
+            gameObject.readyPlayerOne.starterObject = gameObject.starters[i];
+            console.log(gameObject.readyPlayerOne.starterObject);
         }
     }
     gameObject.selection();
@@ -173,7 +191,8 @@ const selectStarter = (event)=>{
 pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);
 })
-attackButton.addEventListener('click', actionStart);
+//this event listener will be reassigned to each move li
+// attackButton.addEventListener('click', actionStart);
 
 battleButtonFight.addEventListener('click',gameObject.selectBattle);
 // battleButtonRun.addEventListener('click',selectRun);

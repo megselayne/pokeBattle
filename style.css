@@ -1,4 +1,7 @@
 /* @import url('db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon'); */
+body{
+    font-family: sans-serif;
+}
 .battle{
     display: flex;
     flex-direction: column;
@@ -26,8 +29,8 @@ h2{
 }
 .battle-box{
     display: none;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
     background-color: #D3D3D3;
     border-radius: 5px;
     max-width: 50%;
@@ -43,6 +46,20 @@ h2{
     padding:10px;
     border-radius: 5px;
     margin: 5px 30px;
+}
+.battle-buttons{
+    display:flex;
+    flex-direction: column;
+}
+.moveset-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+ul{
+    list-style: none;
+    font-size:24px;
 }
 .attack-vis{
     display:none;
