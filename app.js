@@ -6,7 +6,10 @@ const titles = document.querySelector('h2.title-text');
 const titles2 = document.querySelector('h3.title-text');
 const attackVis = document.querySelector('.attack-vis');
 const competitors = document.querySelector('.competitors');
-
+const battleBox = document.querySelector('.battle-box');
+const battleButtonFight = document.querySelector('#fight');
+const battleButtonRun = document.querySelector('#run');
+//game object
 const gameObject ={
     types: {
         grass:{
@@ -97,6 +100,7 @@ const gameObject ={
             titles2.innerHTML = '';
             competitors.style.justifyContent = 'space-between';
             gameObject.readyPlayerOne.starterElement.style.order = '-1';
+            battleBox.style.display = 'flex';
         },1000 *3)
     },
     selection(){
@@ -116,9 +120,13 @@ const gameObject ={
            if(!element.classList.contains('selected')){
                element.style.display = 'none';
            }
-       })
-            this.battleCommence();
+        })
+        this.battleCommence();
 
+    },
+    selectBattle(){
+        console.log('heard you click Fight!');
+        //open moveset box
     }
 }
 
@@ -154,3 +162,6 @@ pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);
 })
 attackButton.addEventListener('click', actionStart);
+
+battleButtonFight.addEventListener('click',gameObject.selectBattle);
+// battleButtonRun.addEventListener('click',selectRun);
