@@ -72,7 +72,7 @@ ul{
     height:30px; */
     display: inline;
     background-color: blue;
-    animation: attack-s 4s;
+    animation: attack-s 3s;
 }
 
 /* keyframes keyword, animation name */

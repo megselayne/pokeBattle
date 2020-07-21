@@ -16,6 +16,8 @@ const userProfilePName = document.createElement('h3');
 const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
 const rivalProfileHP = document.createElement('h4');
+const playByPlay = document.createElement('h2');
+battleBox.append(playByPlay);
 //game object
 const gameObject ={
     turn: 'readyPlayerOne',
@@ -43,6 +45,7 @@ const gameObject ={
             type: 'fire',
             weakness: 'water',
             hp: 25,
+            color: 'red',
             moveset:{
                 tackle:{
                     name: 'tackle',
@@ -58,12 +61,12 @@ const gameObject ={
                 },
             }
         },
-
         squirtle:{
             name: 'squirtle',
             type: 'water',
             weakness: 'grass',
             hp: 25,
+            color: 'blue',
             moveset:{
                 tackle:{
                     name: 'tackle',
@@ -84,6 +87,7 @@ const gameObject ={
             type: 'grass',
             weakness: 'fire',
             hp: 25,
+            color: 'green',
             moveset:{
                 tackle:{
                     name: 'tackle',
@@ -102,10 +106,12 @@ const gameObject ={
     },
     readyPlayerOne:{
         starterObject: null,
+        currentMove: null,
 
     },
     rival:{
         starterObject: null,
+        currentMove: null,
     },
     battleCommence(){
         setTimeout(function(){
@@ -128,7 +134,7 @@ const gameObject ={
             rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
             rivalProfile.appendChild(rivalProfilePName);
             rivalProfile.appendChild(rivalProfileHP);
-        },1000 *3)
+        },1000 *6)
     },
     selection(){
         titles.innerHTML = `You chose ${this.readyPlayerOne.starterObject.name}`;
@@ -148,6 +154,18 @@ const gameObject ={
                element.style.display = 'none';
            }
         })
+        console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
+        const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
+        movesetHolder.classList.add('moveset-holder');
+        battleBox.appendChild(movesetHolder);
+        moveset.forEach(element =>{
+            const newLi = document.createElement('li');
+            newLi.innerText = element;
+            newLi.classList.add('moveset-item');
+            newLi.addEventListener('click',actionStart);
+            newLi.style.display = 'none',
+            movesetHolder.append(newLi);
+        })
         this.battleCommence();
 
     },
@@ -157,53 +175,89 @@ const gameObject ={
         //selects move keys ie ['tackle','ember','slash'] for movelist.
         //use for.each to create list items in unordered list
         //flex column
+        playByPlay.innerText = '';
+        movesetHolder.style.display = 'flex';
         battleButtonRun.style.display = 'none';
         battleButtonFight.style.display = '';
         battleBox.style.justifyContent = 'flex-start';
-        console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
-        const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
-        movesetHolder.classList.add('moveset-holder');
-        // movesetHolder.style.display = 'flex';
-        // movesetHolder.style.flexDirection = 'column';
-        battleBox.appendChild(movesetHolder);
-        moveset.forEach(element =>{
-            const newLi = document.createElement('li');
-            newLi.innerText = element;
-            newLi.addEventListener('click',actionStart);
-            movesetHolder.append(newLi);
+        // console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
+        // const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
+        // movesetHolder.classList.add('moveset-holder');
+        const movesetItems = document.querySelectorAll('.moveset-item')
+        movesetItems.forEach(element =>{
+            element.style.display = '';
         })
+    },
+    rivalTurn(){
+        setTimeout(function(){
+        const randomMove = Math.floor(Math.random()*3);
+        const moveset = Object.keys(gameObject.rival.starterObject.moveset);
+        console.log(moveset[randomMove]);
+        gameObject.rival.currentMove = moveset[randomMove];
+        actionStart();
+        }, 1000*6)
+    }
+}
+//end game object
+const checkHealth =()=>{
+    if(gameObject.turn === 'readyPlayerOne' && gameObject.rival.starterObject.hp > 0){
+        console.log(gameObject.turn);
+        gameObject.whoseTurn();
+        console.log(gameObject.turn);
+        gameObject.rivalTurn();
+    }else if(gameObject.turn === 'readyPlayerOne' && gameObject.rival.starterObject.hp < 1){
+        console.log(gameObject.turn);
+        gameObject.whoseTurn();
+        console.log(gameObject.turn);
+    }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp > 0){
+        console.log(gameObject.turn);
+        gameObject.whoseTurn();
+        console.log(gameObject.turn);
+        setTimeout(function(){
+        gameObject.selectBattle();
+        },1000*7)
+    }else if(gameObject.turn === 'rival' && gameObject.rival.starterObject.hp < 1){
+        console.log(gameObject.turn);
+        gameObject.whoseTurn();
+        console.log(gameObject.turn);
     }
 }
 
 const actionStart =(event)=>{
-    console.log('heard the click');
+    console.log('heard the click for move');
     movesetHolder.style.display = 'none';
     battleButtonFight.style.display = 'none';
-    const newH2 = document.createElement('h2');
     battleBox.style.justifyContent = 'center';
-    battleBox.append(newH2);
     if(! attackVis.classList.contains('animation')){
         console.log('knows it does not contain');
         attackVis.classList.add('animation');
+        console.log(gameObject.turn);
+        console.log(gameObject[gameObject.turn].starterObject.color);
+        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
     }
     else{
         attackVis.classList.remove('animation');
+        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
         //add back after delay
         setTimeout(function(){
             attackVis.classList.add('animation');
         },1000 *1);
     }
     if(event){
-        newH2.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
-         //decrement hp
+        playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
+         //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
         rivalProfileHP.innerText = gameObject.rival.starterObject.hp;
     }
     else{
         (console.log(`no event, it's rivals turn.`))
+        playByPlay.innerText = `${gameObject.rival.starterObject.name} used ${gameObject.rival.currentMove}`;
+         //decrement rival hp
+        gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
+        userProfileHP.innerText = gameObject.rival.starterObject.hp;
     }
    
-
+    checkHealth();
 };
 
 const selectStarter = (event)=>{
@@ -227,8 +281,6 @@ const selectStarter = (event)=>{
 pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);
 })
-//this event listener will be reassigned to each move li
-// attackButton.addEventListener('click', actionStart);
 
 battleButtonFight.addEventListener('click',gameObject.selectBattle);
 // battleButtonRun.addEventListener('click',selectRun);
