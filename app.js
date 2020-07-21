@@ -10,6 +10,8 @@ const battleBox = document.querySelector('.battle-box');
 const battleButtonFight = document.querySelector('#fight');
 const battleButtonRun = document.querySelector('#run');
 const movesetHolder = document.createElement('ul');
+const readyPlayerOneProfile = document.createElement('div');
+const rivalProfile = document.createElement('div');
 //game object
 const gameObject ={
     turn: 'readyPlayerOne',
@@ -110,6 +112,22 @@ const gameObject ={
             battleBox.style.display = 'flex';
             battleBox.style.justifyContent = 'flex-start';
             battleButtonRun.style.display = '';
+            //profiles user
+            gameObject.readyPlayerOne.starterElement.appendChild(readyPlayerOneProfile);
+            const userProfilePName = document.createElement('h3');
+            userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
+            const userProfileHP = document.createElement('h4');
+            userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
+            readyPlayerOneProfile.appendChild(userProfilePName);
+            readyPlayerOneProfile.appendChild(userProfileHP);
+           //profiles rival
+           gameObject.rival.starterElement.appendChild(rivalProfile);
+            const rivalProfilePName = document.createElement('h3');
+            rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
+            const rivalProfileHP = document.createElement('h4');
+            rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+            rivalProfile.appendChild(rivalProfilePName);
+            rivalProfile.appendChild(rivalProfileHP);
         },1000 *3)
     },
     selection(){
@@ -166,6 +184,7 @@ const actionStart =(event)=>{
     battleBox.append(newH2);
     if(event){
         newH2.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
+         //decrement hp
     }
     else{
         (console.log(`no event, it's rivals turn.`))
@@ -181,7 +200,8 @@ const actionStart =(event)=>{
             attackVis.classList.add('animation');
         },1000 *1);
     }
-    
+   
+
 };
 
 const selectStarter = (event)=>{

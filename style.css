@@ -1,6 +1,6 @@
 /* @import url('db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon'); */
 body{
-    font-family: sans-serif;
+    font-family: 'Pokemon Solid';
 }
 .battle{
     display: flex;
@@ -66,7 +66,7 @@ ul{
 }
 .attack-vis.animation{
     position: absolute;
-    top:15%;
+    top:35%;
     left:15%;
     /* width:50px;
     height:30px; */
@@ -80,25 +80,21 @@ ul{
     /* description of the animation */
     0% {
       /* the beginning state of the animation */
-      width:50px;
+      width:5%;
       height:30px;
-      background-color: blue;
     }
     50% {
-        width:250px;
+        width:30%;
         height:30px;
-        background-color: blue;
     }
     75%{
-        width:350px;
+        width:45%;
         height:30px;
-        background-color: blue;
     }
     99% {
         /* the ending state of the animation */
-          width:500px;
+          width:65%;
           height:30px;
-          background-color: blue;
       }
     100% {
       /* the ending state of the animation */
