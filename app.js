@@ -30,17 +30,6 @@ const gameObject ={
             this.turn = 'rival';
         }
     },
-    types: {
-        grass:{
-            weakness: 'fire',
-        },
-        fire:{
-            weakness: 'water',
-        },
-        water:{
-            weakness: 'grass',
-        }
-    },
     trainers: ['Youngster Billy','Ace Trainer Lucy','Scientist Ned'],
     starters:{
         charmander:{
