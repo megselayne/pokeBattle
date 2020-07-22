@@ -77,7 +77,7 @@ const gameObject ={
                 },
                 bite:{
                     name: 'bubble',
-                    power: 6,
+                    power: 10,
                 },
             }
         },
@@ -201,30 +201,36 @@ const gameObject ={
         gameObject.rival.currentMove = moveset[randomMove];
         actionStart();
         }, 1000*6)
+    },
+    lossCondition(winner){
+        setTimeout(function(){
+        if(winner === 'readyPlayerOne'){
+            gameObject.rival.starterElement.style.display = 'none';
+            rivalProfile.style.display = 'none';
+            titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! Rival blacked out! You win!`
+        }else{
+            gameObject.readyPlayerOne.starterElement.style.display = 'none';
+            userProfile.style.display = 'none';
+            titles.innerText = `Your ${gameObject.readyPlayerOne.starterObject.name} fainted! You blacked out! You loose!`
+        }
+        },1000*5)
     }
+
 }
 //end game object
 const checkHealth =()=>{
     if(gameObject.turn === 'readyPlayerOne' && gameObject.rival.starterObject.hp > 0){
-        console.log(gameObject.turn);
         gameObject.whoseTurn();
-        console.log(gameObject.turn);
         gameObject.rivalTurn();
     }else if(gameObject.turn === 'readyPlayerOne' && gameObject.rival.starterObject.hp < 1){
-        console.log(gameObject.turn);
-        gameObject.whoseTurn();
-        console.log(gameObject.turn);
+        gameObject.lossCondition(gameObject.turn);
     }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp > 0){
-        console.log(gameObject.turn);
         gameObject.whoseTurn();
-        console.log(gameObject.turn);
         setTimeout(function(){
         gameObject.selectBattle();
         },1000*7)
-    }else if(gameObject.turn === 'rival' && gameObject.rival.starterObject.hp < 1){
-        console.log(gameObject.turn);
-        gameObject.whoseTurn();
-        console.log(gameObject.turn);
+    }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp < 1){
+        gameObject.lossCondition(gameObject.turn);
     }
 }
 
@@ -242,8 +248,6 @@ const actionStart =(event)=>{
     else{
         attackVis.classList.remove('animation');
         attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
-        // attackVis.style.removeProperty('left');
-        // attackVis.style.setProperty('right','15%');
         console.log(gameObject[gameObject.turn].remove);
         attackVis.style.removeProperty(gameObject[gameObject.turn].remove);
         attackVis.style.setProperty(gameObject[gameObject.turn].addPosition,gameObject[gameObject.turn].addValue);
