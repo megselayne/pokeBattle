@@ -136,6 +136,8 @@ const gameObject ={
             gameObject.readyPlayerOne.starterElement.style.order = '-1';
             battleBox.style.display = 'flex';
             battleBox.style.justifyContent = 'flex-start';
+            playByPlay.innerText = '';
+            battleButtonFight.style.display = '';
             battleButtonRun.style.display = '';
             //profiles user
             userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
@@ -243,8 +245,8 @@ const checkHealth =()=>{
     }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp > 0){
         gameObject.whoseTurn();
         setTimeout(function(){
-        gameObject.selectBattle();
-        },1000*7)
+        gameObject.battleCommence();
+        },1000*6)
     }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp < 1){
         gameObject.lossCondition(gameObject.turn);
     }
@@ -294,7 +296,6 @@ const selectStarter = (event)=>{
     const id = event.target.getAttribute('class');
     gameObject.readyPlayerOne.starterName = event.target.getAttribute('class');
     gameObject.readyPlayerOne.starterElement = document.querySelector('#starter');
-    // event.target.parentNode.classList.add('selected','readyPlayerOne');
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
