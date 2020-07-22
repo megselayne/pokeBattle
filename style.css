@@ -15,6 +15,12 @@ div .title-text{
     justify-content: center;
     align-items: center;
 }
+.replay-buttons{
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 .competitors{
     display: flex;
     flex-direction: row;
@@ -38,7 +44,7 @@ h2{
     max-width: 50%;
     min-height: 200px;
 }
-.battle-click{
+button{
     background-color: red;
     border: none;
     color:white;

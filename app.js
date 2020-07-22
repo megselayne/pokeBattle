@@ -1,5 +1,5 @@
-//variable declarations
-const attackButton = document.querySelector('.battle-click');
+//variable declarations for DOM manipulation
+const runButton = document.querySelector('.battle-run');
 const pokeStarters = document.querySelectorAll('div.pokemon');
 const readyPlayerOneStarter = document.querySelector('#starter');
 const rivalStarter = document.querySelector('#rival');
@@ -18,6 +18,10 @@ const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
 const rivalProfileHP = document.createElement('h4');
 const playByPlay = document.createElement('h2');
+const replayButtonYes = document.querySelector('.yes');
+const replayButtonNo = document.querySelector('.no');
+const replayButtons = document.querySelector('.replay-buttons');
+
 
 //game object
 const gameObject ={
@@ -69,7 +73,7 @@ const gameObject ={
                 },
                 bubble:{
                     name: 'bubble',
-                    power: 4,
+                    power: 25,
                 },
                 bite:{
                     name: 'bubble',
@@ -117,27 +121,38 @@ const gameObject ={
         addPosition: 'right',
         addValue: '15%',
     },
+    resetBattleBox(){
+        //All the DOM manipulation to re-show controls in competitor div
+        replayButtons.style.display = 'none';
+        titles2.innerHTML = '';
+        rivalStarter.display = 'block';
+        readyPlayerOneStarter.display = 'block';
+        competitors.style.justifyContent = 'space-between';
+        gameObject.readyPlayerOne.starterElement.style.order = '-1';
+        battleBox.style.display = 'flex';
+        battleBox.style.justifyContent = 'flex-start';
+        playByPlay.innerText = '';
+        battleButtonFight.style.display = '';
+        battleButtonRun.style.display = '';
+        //profiles user
+        gameObject.readyPlayerOne.starterElement.style.display = '';
+        readyPlayerOneProfile.style.display = '';
+        userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
+        userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
+        //profiles rival
+        gameObject.rival.starterElement.style.display = '';
+        rivalProfile.style.display = 'block';
+        rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
+        rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+    },
     battleCommence(){
         setTimeout(function(){
+            gameObject.resetBattleBox();
             titles.innerHTML = `${gameObject.rival.rivalName} wants to battle`;
-            titles2.innerHTML = '';
-            competitors.style.justifyContent = 'space-between';
-            gameObject.readyPlayerOne.starterElement.style.order = '-1';
-            battleBox.style.display = 'flex';
-            battleBox.style.justifyContent = 'flex-start';
-            playByPlay.innerText = '';
-            battleButtonFight.style.display = '';
-            battleButtonRun.style.display = '';
-            //profiles user
-            userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
-            userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
-           //profiles rival
-            rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
-            rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
-        },1000 *5)
+
+        },1000 *4)
     },
-    selection(){
-        titles.innerHTML = `You chose ${this.readyPlayerOne.starterObject.name}`;
+    rivalSelection(){
         const userWeakness = this.starters[this.readyPlayerOne.starterName].weakness;
         console.log(userWeakness);
         for(let i of Object.keys(this.starters)){
@@ -147,6 +162,12 @@ const gameObject ={
                 document.querySelector('img#rival').setAttribute('src', this.rival.starterObject.image);
             }
         }
+    },
+    selection(){
+        titles.innerHTML = `You chose ${this.readyPlayerOne.starterObject.name}`;
+
+        this.rivalSelection();
+
         console.log(this.rival.starterObject);
         this.rival.starterElement.classList.add('selected','rival');
         titles2.innerHTML = `Your Rival chose ${this.rival.starterObject.name}`;
@@ -201,10 +222,16 @@ const gameObject ={
         setTimeout(function(){
         const randomMove = Math.floor(Math.random()*3);
         const moveset = Object.keys(gameObject.rival.starterObject.moveset);
+        console.log(moveset);
         console.log(moveset[randomMove]);
         gameObject.rival.currentMove = moveset[randomMove];
         actionStart();
         }, 1000*6)
+    },
+    replaySequence(){
+        titles.innerText = 'Ready to keep battling?';
+        replayButtons.style.display = 'flex';
+        console.log(this.starters[this.readyPlayerOne.starterObject.name].hp);
     },
     lossCondition(winner){
         setTimeout(function(){
@@ -216,12 +243,43 @@ const gameObject ={
             titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! Rival blacked out! You win!`
         }else{
             gameObject.readyPlayerOne.starterElement.style.display = 'none';
-            userProfile.style.display = 'none';
+            readyPlayerOneProfile.style.display = 'none';
             playByPlay.innerText = '';
             titles.innerText = `Your ${gameObject.readyPlayerOne.starterObject.name} fainted! You blacked out! You loose!`
         }
         },1000*5)
-    }
+        setTimeout(function(){
+            gameObject.replaySequence();
+        },1000*8)
+    },
+    rivalGenerator(){
+        setTimeout(function(){
+            const rivalIndex = Math.floor(Math.random()* gameObject.trainers.length);
+            gameObject.rival.rivalName = gameObject.trainers[rivalIndex];
+            const starters = Object.keys(gameObject.starters)
+            const id = starters[rivalIndex];
+            for(let i of starters){
+                if(gameObject.starters[i].name === id){
+                    gameObject.rival.starterObject = gameObject.starters[i];
+                    rivalStarter.childNodes[1].setAttribute('src',gameObject.rival.starterObject.image);
+                    gameObject.rival.starterObject.hp = 25;
+                    gameObject.readyPlayerOne.starterObject.hp = 25;
+                    console.log(gameObject.rival.starterObject);
+                }
+            }
+            gameObject.battleCommence();
+            }, 1000*3)
+    },
+    replayRival(){
+        this.rival.rivalName = 'Your Rival';
+        this.rivalSelection();
+        gameObject.rival.starterObject.hp = 25;
+        gameObject.readyPlayerOne.starterObject.hp = 25;
+        this.battleCommence();
+    },
+    home(){
+
+    },
 
 }
 //end game object
@@ -304,4 +362,6 @@ pokeStarters.forEach(element=>{
 })
 
 battleButtonFight.addEventListener('click',gameObject.selectBattle);
-// battleButtonRun.addEventListener('click',selectRun);
+// battleButtonRun.addEventListener('click',gameObject.home);
+replayButtonYes.addEventListener('click', gameObject.rivalGenerator);
+// replayButtonNo.addEventListener('click',selectRun);
