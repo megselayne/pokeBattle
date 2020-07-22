@@ -106,15 +106,17 @@ const gameObject ={
     readyPlayerOne:{
         starterObject: null,
         currentMove: null,
-        right: '0%',
-        left: '15%'
+        remove: 'right',
+        addPosition: 'left',
+        addValue: '15%',
 
     },
     rival:{
         starterObject: null,
         currentMove: null,
-        right: '15%',
-        left: '0%',
+        remove: 'left',
+        addPosition: 'right',
+        addValue: '15%',
     },
     battleCommence(){
         setTimeout(function(){
@@ -137,7 +139,7 @@ const gameObject ={
             rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
             rivalProfile.appendChild(rivalProfilePName);
             rivalProfile.appendChild(rivalProfileHP);
-        },1000 *6)
+        },1000 *5)
     },
     selection(){
         titles.innerHTML = `You chose ${this.readyPlayerOne.starterObject.name}`;
@@ -232,21 +234,19 @@ const actionStart =(event)=>{
     battleButtonFight.style.display = 'none';
     battleBox.style.justifyContent = 'center';
     if(! attackVis.classList.contains('animation')){
-        console.log('knows it does not contain');
         attackVis.classList.add('animation');
-        console.log(gameObject.turn);
-        console.log(gameObject[gameObject.turn].starterObject.color);
-        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
-        console.log(gameObject[gameObject.turn].left);
-        attackVis.style.left = gameObject[gameObject.turn].left;
         attackVis.style.removeProperty('right');
+        attackVis.style.setProperty('left','15%');
+        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
     }
     else{
         attackVis.classList.remove('animation');
         attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
-        console.log(gameObject[gameObject.turn].right);
-        attackVis.style.removeProperty('left');
-        attackVis.style.right = gameObject[gameObject.turn].right;
+        // attackVis.style.removeProperty('left');
+        // attackVis.style.setProperty('right','15%');
+        console.log(gameObject[gameObject.turn].remove);
+        attackVis.style.removeProperty(gameObject[gameObject.turn].remove);
+        attackVis.style.setProperty(gameObject[gameObject.turn].addPosition,gameObject[gameObject.turn].addValue);
         //add back after delay
         setTimeout(function(){
             attackVis.classList.add('animation');
