@@ -21,7 +21,10 @@ const playByPlay = document.createElement('h2');
 const replayButtonYes = document.querySelector('.yes');
 const replayButtonNo = document.querySelector('.no');
 const replayButtons = document.querySelector('.replay-buttons');
-
+const homeButtons = document.querySelector('.home-buttons');
+const replayRival = document.querySelector('.rival');
+const replayTrainers = document.querySelector('.trainers');
+const newGame = document.querySelector('.reset');
 
 //game object
 const gameObject ={
@@ -122,7 +125,8 @@ const gameObject ={
         addValue: '15%',
     },
     resetBattleBox(){
-        //All the DOM manipulation to re-show controls in competitor div
+        //All the DOM manipulation to re-show controls and data in competitor div
+        homeButtons.style.display = 'none';
         replayButtons.style.display = 'none';
         titles2.innerHTML = '';
         rivalStarter.display = 'block';
@@ -201,18 +205,11 @@ const gameObject ={
     },
     selectBattle(){
         console.log('heard you click Fight!');
-        //open moveset box
-        //selects move keys ie ['tackle','ember','slash'] for movelist.
-        //use for.each to create list items in unordered list
-        //flex column
         playByPlay.innerText = '';
         movesetHolder.style.display = 'flex';
         battleButtonRun.style.display = 'none';
         battleButtonFight.style.display = '';
         battleBox.style.justifyContent = 'flex-start';
-        // console.log(Object.keys(gameObject.readyPlayerOne.starterObject.moveset));
-        // const moveset = Object.keys(gameObject.readyPlayerOne.starterObject.moveset);
-        // movesetHolder.classList.add('moveset-holder');
         const movesetItems = document.querySelectorAll('.moveset-item')
         movesetItems.forEach(element =>{
             element.style.display = '';
@@ -271,14 +268,22 @@ const gameObject ={
             }, 1000*3)
     },
     replayRival(){
-        this.rival.rivalName = 'Your Rival';
-        this.rivalSelection();
+        gameObject.rival.rivalName = 'Your Rival';
+        gameObject.rivalSelection();
         gameObject.rival.starterObject.hp = 25;
         gameObject.readyPlayerOne.starterObject.hp = 25;
-        this.battleCommence();
+        gameObject.battleCommence();
     },
     home(){
-
+        replayButtons.style.display = 'none';
+        readyPlayerOneProfile.style.display = 'none';
+        rivalProfile.style.display = 'none';
+        battleBox.style.display = 'none';
+        homeButtons.style.display = 'flex';
+        gameObject.rival.starterObject.hp = 25;
+        gameObject.readyPlayerOne.starterObject.hp = 25;
+        competitors.style.justifyContent = 'center';
+        titles.innerText = `Who do you want to battle?`;
     },
 
 }
@@ -355,13 +360,19 @@ const selectStarter = (event)=>{
     readyPlayerOneStarter.childNodes[1].setAttribute('src',gameObject.readyPlayerOne.starterObject.image);
     gameObject.selection();
 }
+//reload
+const reload = ()=>{
+    location.reload();
+}
 
 //event listeners
 pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);
 })
-
 battleButtonFight.addEventListener('click',gameObject.selectBattle);
-// battleButtonRun.addEventListener('click',gameObject.home);
+battleButtonRun.addEventListener('click',gameObject.home);
 replayButtonYes.addEventListener('click', gameObject.rivalGenerator);
-// replayButtonNo.addEventListener('click',selectRun);
+replayButtonNo.addEventListener('click',gameObject.home);
+newGame.addEventListener('click',reload);
+replayTrainers.addEventListener('click',gameObject.rivalGenerator);
+replayRival.addEventListener('click',gameObject.replayRival);
