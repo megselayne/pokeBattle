@@ -1,6 +1,8 @@
 //variable declarations
 const attackButton = document.querySelector('.battle-click');
 const pokeStarters = document.querySelectorAll('div.pokemon');
+const readyPlayerOneStarter = document.querySelector('#starter');
+const rivalStarter = document.querySelector('#rival');
 const titles = document.querySelector('h2.title-text');
 const titles2 = document.querySelector('h3.title-text');
 const attackVis = document.querySelector('.attack-vis');
@@ -150,14 +152,15 @@ const gameObject ={
         for(let i of Object.keys(this.starters)){
             if(this.starters[i].type === userWeakness){
                 this.rival.starterObject = this.starters[i];
-                this.rival.starterElement = document.querySelector(`.${i}`);
+                this.rival.starterElement = rivalStarter;
+                document.querySelector('img#rival').setAttribute('src', this.rival.starterObject.image);
             }
         }
         console.log(this.rival.starterObject);
         this.rival.starterElement.classList.add('selected','rival');
         titles2.innerHTML = `Your Rival chose ${this.rival.starterObject.name}`;
         pokeStarters.forEach(element =>{
-           if(!element.classList.contains('selected')){
+           if(element.classList.contains('disappear')){
                element.style.display = 'none';
            }
         })
@@ -288,10 +291,10 @@ const actionStart =(event)=>{
 
 const selectStarter = (event)=>{
     console.log('pokemon selected!')
-    const id = event.target.getAttribute('id');
-    gameObject.readyPlayerOne.starterName = event.target.getAttribute('id');
-    gameObject.readyPlayerOne.starterElement = event.target.parentNode;
-    event.target.parentNode.classList.add('selected','readyPlayerOne');
+    const id = event.target.getAttribute('class');
+    gameObject.readyPlayerOne.starterName = event.target.getAttribute('class');
+    gameObject.readyPlayerOne.starterElement = document.querySelector('#starter');
+    // event.target.parentNode.classList.add('selected','readyPlayerOne');
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
@@ -301,6 +304,7 @@ const selectStarter = (event)=>{
             console.log(gameObject.readyPlayerOne.starterObject);
         }
     }
+    readyPlayerOneStarter.childNodes[1].setAttribute('src',gameObject.readyPlayerOne.starterObject.image);
     gameObject.selection();
 }
 
