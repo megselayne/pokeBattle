@@ -16,9 +16,10 @@ const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
 const rivalProfileHP = document.createElement('h4');
 const playByPlay = document.createElement('h2');
-battleBox.append(playByPlay);
+
 //game object
 const gameObject ={
+    readyPlayerOneWins: 0,
     turn: 'readyPlayerOne',
     whoseTurn(){
         if(this.turn === 'rival'){
@@ -38,8 +39,10 @@ const gameObject ={
             weakness: 'grass',
         }
     },
+    trainers: ['Youngster Billy','Ace Trainer Lucy','Scientist Ned'],
     starters:{
         charmander:{
+            trainer: 'Red',
             name: 'charmander',
             type: 'fire',
             weakness: 'water',
@@ -58,9 +61,11 @@ const gameObject ={
                     name: 'slash',
                     power: 6,
                 },
-            }
+            },
+            image: './assets/charmander.png',
         },
         squirtle:{
+            trainer: 'Blue',
             name: 'squirtle',
             type: 'water',
             weakness: 'grass',
@@ -77,9 +82,10 @@ const gameObject ={
                 },
                 bite:{
                     name: 'bubble',
-                    power: 10,
+                    power: 6,
                 },
-            }
+            },
+            image: './assets/squirtle.png',
         },
         bulbasaur:{
             name: 'bulbasaur',
@@ -100,7 +106,8 @@ const gameObject ={
                     name: 'razor leaf',
                     power: 6,
                 }
-            }
+            },
+            image: './assets/bulbasaur.png',
         }
     },
     readyPlayerOne:{
@@ -112,6 +119,7 @@ const gameObject ={
 
     },
     rival:{
+        rivalName: 'Your Rival',
         starterObject: null,
         currentMove: null,
         remove: 'left',
@@ -120,7 +128,7 @@ const gameObject ={
     },
     battleCommence(){
         setTimeout(function(){
-            titles.innerHTML = 'Your Rival wants to battle';
+            titles.innerHTML = `${gameObject.rival.rivalName} wants to battle`;
             titles2.innerHTML = '';
             competitors.style.justifyContent = 'space-between';
             gameObject.readyPlayerOne.starterElement.style.order = '-1';
@@ -128,17 +136,11 @@ const gameObject ={
             battleBox.style.justifyContent = 'flex-start';
             battleButtonRun.style.display = '';
             //profiles user
-            gameObject.readyPlayerOne.starterElement.appendChild(readyPlayerOneProfile);
             userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
             userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
-            readyPlayerOneProfile.appendChild(userProfilePName);
-            readyPlayerOneProfile.appendChild(userProfileHP);
            //profiles rival
-           gameObject.rival.starterElement.appendChild(rivalProfile);
             rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
             rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
-            rivalProfile.appendChild(rivalProfilePName);
-            rivalProfile.appendChild(rivalProfileHP);
         },1000 *5)
     },
     selection(){
@@ -171,6 +173,14 @@ const gameObject ={
             newLi.style.display = 'none',
             movesetHolder.append(newLi);
         })
+        battleBox.append(playByPlay);
+        gameObject.readyPlayerOne.starterElement.appendChild(readyPlayerOneProfile);
+        readyPlayerOneProfile.appendChild(userProfilePName);
+        readyPlayerOneProfile.appendChild(userProfileHP);
+        gameObject.rival.starterElement.appendChild(rivalProfile);
+        rivalProfile.appendChild(rivalProfilePName);
+        rivalProfile.appendChild(rivalProfileHP);
+
         this.battleCommence();
 
     },
@@ -207,10 +217,13 @@ const gameObject ={
         if(winner === 'readyPlayerOne'){
             gameObject.rival.starterElement.style.display = 'none';
             rivalProfile.style.display = 'none';
+            gameObject.readyPlayerOneWins ++;
+            playByPlay.innerText = '';
             titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! Rival blacked out! You win!`
         }else{
             gameObject.readyPlayerOne.starterElement.style.display = 'none';
             userProfile.style.display = 'none';
+            playByPlay.innerText = '';
             titles.innerText = `Your ${gameObject.readyPlayerOne.starterObject.name} fainted! You blacked out! You loose!`
         }
         },1000*5)
@@ -290,6 +303,7 @@ const selectStarter = (event)=>{
     }
     gameObject.selection();
 }
+
 //event listeners
 pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);

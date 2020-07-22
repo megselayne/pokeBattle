@@ -6,6 +6,8 @@ body{
     display: flex;
     flex-direction: column;
     font-family: 'Pokemon Solid';
+    height: 1000px;
+    width: auto;
 }
 div .title-text{
     display:flex;
@@ -21,7 +23,7 @@ div .title-text{
 
 img{
     height: auto;
-    width:300px;
+    width:200px;
 }
 
 h2{
@@ -91,7 +93,7 @@ ul{
     }
     99% {
         /* the ending state of the animation */
-          width:65%;
+          width:68%;
           height:30px;
       }
     100% {
