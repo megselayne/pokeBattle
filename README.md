@@ -5,3 +5,4 @@
 - User selects starter pokemon.
 - User enters battle with automated Rival.
 - User or rival wins when opposing pokemon hp is less than 1.
+- After running from or defeating Rival, user can continue to battle other Trainers in the pokeBattle-verse.
