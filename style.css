@@ -64,12 +64,10 @@ ul{
 .attack-vis{
     display:none;
 }
+
 .attack-vis.animation{
     position: absolute;
     top:35%;
-    left:15%;
-    /* width:50px;
-    height:30px; */
     display: inline;
     background-color: blue;
     animation: attack-s 3s;

@@ -1,6 +1,5 @@
 //variable declarations
 const attackButton = document.querySelector('.battle-click');
-const battleVis = document.querySelector('.attack-vis');
 const pokeStarters = document.querySelectorAll('div.pokemon');
 const titles = document.querySelector('h2.title-text');
 const titles2 = document.querySelector('h3.title-text');
@@ -107,11 +106,15 @@ const gameObject ={
     readyPlayerOne:{
         starterObject: null,
         currentMove: null,
+        right: '0%',
+        left: '15%'
 
     },
     rival:{
         starterObject: null,
         currentMove: null,
+        right: '15%',
+        left: '0%',
     },
     battleCommence(){
         setTimeout(function(){
@@ -234,10 +237,16 @@ const actionStart =(event)=>{
         console.log(gameObject.turn);
         console.log(gameObject[gameObject.turn].starterObject.color);
         attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
+        console.log(gameObject[gameObject.turn].left);
+        attackVis.style.left = gameObject[gameObject.turn].left;
+        attackVis.style.removeProperty('right');
     }
     else{
         attackVis.classList.remove('animation');
         attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
+        console.log(gameObject[gameObject.turn].right);
+        attackVis.style.removeProperty('left');
+        attackVis.style.right = gameObject[gameObject.turn].right;
         //add back after delay
         setTimeout(function(){
             attackVis.classList.add('animation');
@@ -247,14 +256,14 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
-        rivalProfileHP.innerText = gameObject.rival.starterObject.hp;
+        rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
     }
     else{
         (console.log(`no event, it's rivals turn.`))
         playByPlay.innerText = `${gameObject.rival.starterObject.name} used ${gameObject.rival.currentMove}`;
          //decrement rival hp
         gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
-        userProfileHP.innerText = gameObject.rival.starterObject.hp;
+        userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
     }
    
     checkHealth();
