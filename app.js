@@ -46,6 +46,7 @@ const gameObject ={
             type: 'fire',
             weakness: 'water',
             hp: 25,
+            maxHp: 25,
             color: 'red',
             moveset:{
                 tackle:{
@@ -69,6 +70,7 @@ const gameObject ={
             type: 'water',
             weakness: 'grass',
             hp: 25,
+            maxHp: 25,
             color: 'blue',
             moveset:{
                 tackle:{
@@ -77,7 +79,7 @@ const gameObject ={
                 },
                 bubble:{
                     name: 'bubble',
-                    power: 25,
+                    power: 4,
                 },
                 bite:{
                     name: 'bubble',
@@ -91,6 +93,7 @@ const gameObject ={
             type: 'grass',
             weakness: 'fire',
             hp: 25,
+            maxHp: 25,
             color: 'green',
             moveset:{
                 tackle:{
@@ -273,8 +276,8 @@ const gameObject ={
                 if(gameObject.starters[i].name === id){
                     gameObject.rival.starterObject = gameObject.starters[i];
                     rivalStarter.childNodes[1].setAttribute('src',gameObject.rival.starterObject.image);
-                    gameObject.rival.starterObject.hp = 25;
-                    gameObject.readyPlayerOne.starterObject.hp = 25;
+                    gameObject.rival.starterObject.hp = gameObject.rival.starterObject.maxHp;
+                    gameObject.readyPlayerOne.starterObject.hp = gameObject.readyPlayerOne.starterObject.maxHp;
                     console.log(gameObject.rival.starterObject);
                 }
             }
@@ -284,8 +287,8 @@ const gameObject ={
     replayRival(){
         gameObject.rival.rivalName = 'Your Rival';
         gameObject.rivalSelection();
-        gameObject.rival.starterObject.hp = 25;
-        gameObject.readyPlayerOne.starterObject.hp = 25;
+        gameObject.rival.starterObject.hp = gameObject.rival.starterObject.maxHp;
+        gameObject.readyPlayerOne.starterObject.hp = gameObject.readyPlayerOne.starterObject.maxHp;
         gameObject.battleCommence();
     },
     home(){
@@ -294,8 +297,8 @@ const gameObject ={
         rivalProfile.style.display = 'none';
         battleBox.style.display = 'none';
         homeButtons.style.display = 'flex';
-        gameObject.rival.starterObject.hp = 25;
-        gameObject.readyPlayerOne.starterObject.hp = 25;
+        gameObject.rival.starterObject.hp = gameObject.rival.starterObject.maxHp;
+        gameObject.readyPlayerOne.starterObject.hp = gameObject.readyPlayerOne.starterObject.maxHp;
         competitors.style.justifyContent = 'center';
         titles.innerText = `Who do you want to battle?`;
     }
