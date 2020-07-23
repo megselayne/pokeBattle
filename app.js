@@ -227,7 +227,7 @@ const gameObject ={
         console.log(moveset[randomMove]);
         gameObject.rival.currentMove = moveset[randomMove];
         actionStart();
-        }, 1000*6)
+        }, 1000*8)
     },
     replaySequence(){
         titles.innerText = 'Ready to keep battling?';
@@ -264,7 +264,7 @@ const gameObject ={
         },1000*5)
         setTimeout(function(){
             gameObject.replaySequence();
-        },1000*8)
+        },1000*6)
     },
     rivalGenerator(){
         setTimeout(function(){
@@ -282,7 +282,7 @@ const gameObject ={
                 }
             }
             gameObject.battleCommence();
-            }, 1000*3)
+            }, 1000*2)
     },
     replayRival(){
         gameObject.rival.rivalName = 'Your Rival';
@@ -315,7 +315,7 @@ const checkHealth =()=>{
         gameObject.whoseTurn();
         setTimeout(function(){
         gameObject.battleCommence();
-        },1000*6)
+        },1000*5)
     }else if(gameObject.turn === 'rival' && gameObject.readyPlayerOne.starterObject.hp < 1){
         gameObject.lossCondition(gameObject.turn);
     }
@@ -330,6 +330,19 @@ const hpAnimations = (user)=>{
 
         setTimeout(function(){
             user.classList.add('animate__animated','animate__delay-4s','animate__bounce');
+        },1000 *1);
+    }
+}
+
+const pokeAnimations = (user)=>{
+    if(! user.classList.contains('animate__animated')){
+        user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
+    }
+    else{
+        user.classList.remove('animate__animated','animate__delay-3s','animate__shakeX');
+
+        setTimeout(function(){
+            user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
         },1000 *1);
     }
 }
@@ -360,6 +373,7 @@ const actionStart =(event)=>{
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
         rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+        pokeAnimations(rivalStarter);
         hpAnimations(rivalProfileHP);
     }
     else{
@@ -367,9 +381,12 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.rival.starterObject.name} used ${gameObject.rival.currentMove}`;
          //decrement rival hp
         gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
-        userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
         // userProfileHP.classList.add('animate__animated','animate__delay-4s','animate__bounce');
-        hpAnimations(userProfileHP);
+        setTimeout(function(){
+            userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
+            pokeAnimations(readyPlayerOneStarter);
+            hpAnimations(userProfileHP);
+        },1000 *.5);
     }
    
     checkHealth();
