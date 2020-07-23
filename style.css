@@ -9,6 +9,13 @@ body{
     height: 1000px;
     width: auto;
 }
+.score{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 100px;
+}
 div .title-text{
     display:flex;
     flex-direction: column;

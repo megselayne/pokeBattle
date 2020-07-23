@@ -25,10 +25,11 @@ const homeButtons = document.querySelector('.home-buttons');
 const replayRival = document.querySelector('.rival');
 const replayTrainers = document.querySelector('.trainers');
 const newGame = document.querySelector('.reset');
+const score = document.querySelector('.score-target');
+let readyPlayerOneWins = 0;
 
 //game object
 const gameObject ={
-    readyPlayerOneWins: 0,
     turn: 'readyPlayerOne',
     whoseTurn(){
         if(this.turn === 'rival'){
@@ -230,12 +231,25 @@ const gameObject ={
         replayButtons.style.display = 'flex';
         console.log(this.starters[this.readyPlayerOne.starterObject.name].hp);
     },
+    setScore(){
+        if(localStorage.getItem('scoreKeeper')){
+          this.readyPlayerOneWins = localStorage.getItem('scoreKeeper');
+        }else{
+            readyPlayerOneWins = 0;
+        }
+        score.innerHTML = readyPlayerOneWins;
+        //set up html element for score tracker
+      },
     lossCondition(winner){
         setTimeout(function(){
         if(winner === 'readyPlayerOne'){
             gameObject.rival.starterElement.style.display = 'none';
             rivalProfile.style.display = 'none';
-            gameObject.readyPlayerOneWins ++;
+            readyPlayerOneWins = parseInt(score.innerHTML) + 1;
+            localStorage.setItem('scoreKeeper',readyPlayerOneWins);
+            console.log(localStorage.getItem('scoreKeeper'));
+            console.log(readyPlayerOneWins);
+            score.innerHTML = readyPlayerOneWins;
             playByPlay.innerText = '';
             titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! Rival blacked out! You win!`
         }else{
@@ -284,7 +298,7 @@ const gameObject ={
         gameObject.readyPlayerOne.starterObject.hp = 25;
         competitors.style.justifyContent = 'center';
         titles.innerText = `Who do you want to battle?`;
-    },
+    }
 
 }
 //end game object
@@ -362,7 +376,11 @@ const selectStarter = (event)=>{
 }
 //reload
 const reload = ()=>{
-    location.reload();
+    const promptResponse = prompt('Are you sure you want to overwrite the file? You will lose all game data!','yes,no');
+    if(promptResponse === 'yes'){
+        localStorage.removeItem('highScore');
+        location.reload();
+    }
 }
 
 //event listeners
@@ -376,3 +394,4 @@ replayButtonNo.addEventListener('click',gameObject.home);
 newGame.addEventListener('click',reload);
 replayTrainers.addEventListener('click',gameObject.rivalGenerator);
 replayRival.addEventListener('click',gameObject.replayRival);
+window.addEventListener('load',gameObject.setScore);
