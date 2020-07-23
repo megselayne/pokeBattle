@@ -321,6 +321,19 @@ const checkHealth =()=>{
     }
 }
 
+const hpAnimations = (user)=>{
+    if(! user.classList.contains('animate__animated')){
+        user.classList.add('animate__animated','animate__delay-4s','animate__bounce');
+    }
+    else{
+        user.classList.remove('animate__animated','animate__delay-4s','animate__bounce');
+
+        setTimeout(function(){
+            user.classList.add('animate__animated','animate__delay-4s','animate__bounce');
+        },1000 *1);
+    }
+}
+
 const actionStart =(event)=>{
     console.log('heard the click for move');
     movesetHolder.style.display = 'none';
@@ -330,7 +343,6 @@ const actionStart =(event)=>{
         attackVis.classList.add('animation');
         attackVis.style.removeProperty('right');
         attackVis.style.setProperty('left','15%');
-        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
     }
     else{
         attackVis.classList.remove('animation');
@@ -343,11 +355,12 @@ const actionStart =(event)=>{
             attackVis.classList.add('animation');
         },1000 *1);
     }
-    if(event){
+    if(event){  
         playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
         rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+        hpAnimations(rivalProfileHP);
     }
     else{
         (console.log(`no event, it's rivals turn.`))
@@ -355,6 +368,8 @@ const actionStart =(event)=>{
          //decrement rival hp
         gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
         userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
+        // userProfileHP.classList.add('animate__animated','animate__delay-4s','animate__bounce');
+        hpAnimations(userProfileHP);
     }
    
     checkHealth();
