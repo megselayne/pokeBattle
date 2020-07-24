@@ -1,25 +1,34 @@
 /* @import url('db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon'); */
-body{
-    font-family: 'Pokemon Solid';
+body{   
+    font-family: fantasy; 
+    background-image: url('./assets/battle_field.png');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y:center;
+    color: white;
 }
-
+h2{
+    font-family: 'Pokemon Hollow';
+}
+h2,h3,h4{
+    margin:5px;
+    font-size: 20px;
+}
 .pokemon{
     min-width: 0;
     min-height: 0;
+    flex-shrink: 1;
 }
 .battle{
     display: flex;
     flex-direction: column;
-    font-family: 'Pokemon Solid';
-    height: 1000px;
-    width: auto;
 }
 .score{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    max-width: 100px;
+    max-width: 200px;
 }
 div .title-text{
     display:flex;
@@ -43,6 +52,7 @@ div .title-text{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-shrink: 1;
 }
 
 img{
@@ -61,7 +71,10 @@ h2{
     background-color: #D3D3D3;
     border-radius: 5px;
     max-width: 50%;
-    min-height: 200px;
+    min-height: 100px;
+    margin-top: 10px;
+    opacity: .8;
+    color: #083A6F;
 }
 button{
     background-color: red;
@@ -77,6 +90,7 @@ button{
 .battle-buttons{
     display:flex;
     flex-direction: column;
+    align-items: center;
 }
 .moveset-holder{
     display: flex;
@@ -87,6 +101,11 @@ button{
 ul{
     list-style: none;
     font-size:24px;
+}
+audio{
+    position: fixed;
+    bottom:0%;
+    right:0%;
 }
 .attack-vis{
     display:none;
