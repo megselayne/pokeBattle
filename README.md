@@ -1,5 +1,5 @@
 # pokeBattle
-## What is Pokemon Battle?
+## What is pokeBattle?
 
 - A simple battle based 1 player game.
 - User selects starter pokemon.
