@@ -8,7 +8,7 @@
 - After running from or defeating Rival, user can continue to battle other Trainers in the pokeBattle-verse.
 
 ## Technologies Used
-- Largely built upon Vanilla JS, with primarily boiler plate HTML, CSS and a sprinkling of animate.css for a few bounce effects.
+- Vanilla JS,HTML, CSS and animate.style for a few bounce effects.
 
 ## Approach
 - pokeBattle is operated in a single screen with heavy DOM manipulation to hide and show user controls.
