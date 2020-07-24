@@ -14,8 +14,10 @@ const movesetHolder = document.createElement('ul');
 const readyPlayerOneProfile = document.createElement('div');
 const rivalProfile = document.createElement('div');
 const userProfilePName = document.createElement('h3');
+const userProfileLevel = document.createElement('h4');
 const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
+const rivalProfileLevel = document.createElement('h4');
 const rivalProfileHP = document.createElement('h4');
 const playByPlay = document.createElement('h2');
 const replayButtonYes = document.querySelector('.yes');
@@ -47,6 +49,11 @@ const gameObject ={
             weakness: 'water',
             hp: 25,
             maxHp: 25,
+            level: 5,
+            baseLevel: 5,
+            prevLevelExp: 30,
+            baseExp: 1,
+            exp: 32,
             color: 'red',
             moveset:{
                 tackle:{
@@ -71,11 +78,16 @@ const gameObject ={
             weakness: 'grass',
             hp: 25,
             maxHp: 25,
+            level: 5,
+            baseLevel: 5,
+            prevLevelExp: 30,
+            baseExp: 1,
+            exp: 37,
             color: 'blue',
             moveset:{
                 tackle:{
                     name: 'tackle',
-                    power: 5,
+                    power: 25,
                 },
                 bubble:{
                     name: 'bubble',
@@ -94,13 +106,18 @@ const gameObject ={
             weakness: 'fire',
             hp: 25,
             maxHp: 25,
+            level: 5,
+            baseLevel: 5,
+            prevLevelExp: 30,
+            baseExp: 1,
+            exp: 30,
             color: 'green',
             moveset:{
                 tackle:{
                     name: 'tackle',
                     power: 5,
                 },
-                wineWhip:{
+                vineWhip:{
                     name: 'vine whip',
                     power: 5,
                 },
@@ -146,11 +163,13 @@ const gameObject ={
         gameObject.readyPlayerOne.starterElement.style.display = '';
         readyPlayerOneProfile.style.display = '';
         userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
+        userProfileLevel.innerText =  `level: ${gameObject.readyPlayerOne.starterObject.level}`;
         userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
         //profiles rival
         gameObject.rival.starterElement.style.display = '';
         rivalProfile.style.display = 'block';
         rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
+        rivalProfileLevel.innerText =  `level: ${gameObject.rival.starterObject.level}`;
         rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
     },
     battleCommence(){
@@ -199,9 +218,11 @@ const gameObject ={
         battleBox.append(playByPlay);
         gameObject.readyPlayerOne.starterElement.appendChild(readyPlayerOneProfile);
         readyPlayerOneProfile.appendChild(userProfilePName);
+        readyPlayerOneProfile.appendChild(userProfileLevel);
         readyPlayerOneProfile.appendChild(userProfileHP);
         gameObject.rival.starterElement.appendChild(rivalProfile);
         rivalProfile.appendChild(rivalProfilePName);
+        rivalProfile.appendChild(rivalProfileLevel);
         rivalProfile.appendChild(rivalProfileHP);
 
         this.battleCommence();
@@ -229,6 +250,45 @@ const gameObject ={
         actionStart();
         }, 1000*8)
     },
+    levelUpAnimation(){
+        if(! userProfileLevel.classList.contains('animate__animated')){
+            userProfileLevel.classList.add('animate__animated','animate__delay-3s','animate__bounce');
+        }
+        else{
+            userProfileLevel.classList.remove('animate__animated','animate__delay-3s','animate__bounce');
+    
+            setTimeout(function(){
+                userProfileLevel.classList.add('animate__animated','animate__delay-3s','animate__bounce');
+            },1000 *1);
+        }
+
+    },
+    expGain(){
+        console.log(`gaining some exp!`);
+        this.readyPlayerOne.starterObject.exp += Math.round(this.rival.starterObject.exp /3);
+        console.log(this.readyPlayerOne.starterObject.exp);
+        titles.innerText = `${this.readyPlayerOne.starterObject.name} gained ${Math.round(this.rival.starterObject.exp /3)} exp!`;
+        setTimeout(function(){
+            gameObject.expCheck();
+        },1000*5)
+    },
+    expCheck(){
+        if(this.readyPlayerOne.starterObject.exp >= this.readyPlayerOne.starterObject.prevLevelExp*1.2){
+            console.log(`time to level up!`);
+            this.readyPlayerOne.starterObject.level ++;
+            console.log(this.readyPlayerOne.starterObject.level);
+            this.readyPlayerOne.starterObject.prevLevelExp = this.readyPlayerOne.starterObject.prevLevelExp*1.2;
+            console.log(this.readyPlayerOne.starterObject.prevLevelExp);
+            titles.innerText = `${this.readyPlayerOne.starterObject.name} grew to level ${this.readyPlayerOne.starterObject.level}!`;
+            userProfileLevel.innerText = `level: ${this.readyPlayerOne.starterObject.level}`;
+            this.levelUpAnimation();
+        }else{
+            console.log(`not time to level up yet`);
+        }
+        setTimeout(function(){
+            gameObject.replaySequence();
+        },1000*6)
+    },
     replaySequence(){
         titles.innerText = 'Ready to keep battling?';
         replayButtons.style.display = 'flex';
@@ -236,7 +296,7 @@ const gameObject ={
     },
     setScore(){
         if(localStorage.getItem('scoreKeeper')){
-          this.readyPlayerOneWins = localStorage.getItem('scoreKeeper');
+          readyPlayerOneWins = localStorage.getItem('scoreKeeper');
         }else{
             readyPlayerOneWins = 0;
         }
@@ -261,10 +321,10 @@ const gameObject ={
             playByPlay.innerText = '';
             titles.innerText = `Your ${gameObject.readyPlayerOne.starterObject.name} fainted! You blacked out! You loose!`
         }
-        },1000*5)
-        setTimeout(function(){
-            gameObject.replaySequence();
         },1000*6)
+        setTimeout(function(){
+            gameObject.expGain();
+        },1000*10)
     },
     rivalGenerator(){
         setTimeout(function(){
@@ -413,7 +473,7 @@ const selectStarter = (event)=>{
 const reload = ()=>{
     const promptResponse = prompt('Are you sure you want to overwrite the file? You will lose all game data!','yes,no');
     if(promptResponse === 'yes'){
-        localStorage.removeItem('highScore');
+        localStorage.removeItem('scoreKeeper');
         location.reload();
     }
 }
