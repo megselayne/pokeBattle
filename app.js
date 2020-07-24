@@ -53,7 +53,7 @@ const gameObject ={
             baseLevel: 5,
             prevLevelExp: 30,
             baseExp: 1,
-            exp: 32,
+            exp: 30,
             color: 'red',
             moveset:{
                 tackle:{
@@ -82,7 +82,7 @@ const gameObject ={
             baseLevel: 5,
             prevLevelExp: 30,
             baseExp: 1,
-            exp: 37,
+            exp: 0,
             color: 'blue',
             moveset:{
                 tackle:{
@@ -273,11 +273,11 @@ const gameObject ={
         },1000*5)
     },
     expCheck(){
-        if(this.readyPlayerOne.starterObject.exp >= this.readyPlayerOne.starterObject.prevLevelExp*1.2){
+        if(this.readyPlayerOne.starterObject.exp >= Math.round(this.readyPlayerOne.starterObject.prevLevelExp*1.2)){
             console.log(`time to level up!`);
             this.readyPlayerOne.starterObject.level ++;
             console.log(this.readyPlayerOne.starterObject.level);
-            this.readyPlayerOne.starterObject.prevLevelExp = this.readyPlayerOne.starterObject.prevLevelExp*1.2;
+            this.readyPlayerOne.starterObject.prevLevelExp = Math.round(this.readyPlayerOne.starterObject.prevLevelExp*1.2);
             console.log(this.readyPlayerOne.starterObject.prevLevelExp);
             titles.innerText = `${this.readyPlayerOne.starterObject.name} grew to level ${this.readyPlayerOne.starterObject.level}!`;
             userProfileLevel.innerText = `level: ${this.readyPlayerOne.starterObject.level}`;
