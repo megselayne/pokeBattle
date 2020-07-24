@@ -80,14 +80,14 @@ const gameObject ={
             maxHp: 25,
             level: 5,
             baseLevel: 5,
-            prevLevelExp: 30,
+            prevLevelExp: 1,
             baseExp: 1,
-            exp: 0,
+            exp: 1,
             color: 'blue',
             moveset:{
                 tackle:{
                     name: 'tackle',
-                    power: 25,
+                    power: 5,
                 },
                 bubble:{
                     name: 'bubble',

@@ -1,13 +1,18 @@
 /* @import url('db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon'); */
-body{
-    font-family: 'Pokemon Solid';
+body{   
+    font-family: fantasy; 
     background-image: url('./assets/battle_field.png');
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y:center;
+    color: white;
+}
+h2{
+    font-family: 'Pokemon Hollow';
 }
 h2,h3,h4{
     margin:5px;
+    font-size: 20px;
 }
 .pokemon{
     min-width: 0;
@@ -17,7 +22,6 @@ h2,h3,h4{
 .battle{
     display: flex;
     flex-direction: column;
-    font-family: 'Pokemon Solid';
 }
 .score{
     display: flex;
@@ -70,6 +74,7 @@ h2{
     min-height: 100px;
     margin-top: 10px;
     opacity: .8;
+    color: #083A6F;
 }
 button{
     background-color: red;
