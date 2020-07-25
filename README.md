@@ -54,3 +54,6 @@
   - if you survive, go back to fight or run!
 - If run
   - Choose to battle rival, other trainers, or start a new game
+  
+  ## Unsolved Problems
+  - Timing for user hp reduction is still a little off. Rival timing is where it should be.
