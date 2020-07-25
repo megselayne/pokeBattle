@@ -19,7 +19,7 @@ const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
 const rivalProfileLevel = document.createElement('h4');
 const rivalProfileHP = document.createElement('h4');
-const playByPlay = document.createElement('h3');
+const playByPlay = document.createElement('h2');
 const replayButtonYes = document.querySelector('.yes');
 const replayButtonNo = document.querySelector('.no');
 const replayButtons = document.querySelector('.replay-buttons');
@@ -49,25 +49,10 @@ class Pokemon {
     }        
 
 }
-//user pokedex
-let udexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
+const pokedex = [['squirtle','water','grass','blue','./assets/squirtle.png', {
     tackle:{
         name: 'tackle',
-        power: 5,
-    },
-    ember:{
-        name: 'ember',
-        power: 4,
-    },
-    slash:{
-        name: 'slash',
-        power: 6,
-    },
-});
-let udexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
-    tackle:{
-        name: 'tackle',
-        power: 5,
+        power: 25,
     },
     bubble:{
         name: 'bubble',
@@ -77,8 +62,8 @@ let udexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squir
         name: 'bubble',
         power: 6,
     },
-},);
-let udexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
+},],
+['bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
     tackle:{
         name: 'tackle',
         power: 5,
@@ -91,9 +76,8 @@ let udexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulb
         name: 'razor leaf',
         power: 6,
     }
-},);
-//rival pokedex
-let rdexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
+},],
+['charmander','fire','water','red','./assets/charmander.png',{
     tackle:{
         name: 'tackle',
         power: 5,
@@ -106,50 +90,16 @@ let rdexCharmander = new Pokemon('charmander','fire','water','red','./assets/cha
         name: 'slash',
         power: 6,
     },
-});
-let rdexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
-    tackle:{
-        name: 'tackle',
-        power: 5,
-    },
-    bubble:{
-        name: 'bubble',
-        power: 4,
-    },
-    bite:{
-        name: 'bubble',
-        power: 6,
-    },
-},);
-let rdexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
-    tackle:{
-        name: 'tackle',
-        power: 5,
-    },
-    vineWhip:{
-        name: 'vine whip',
-        power: 5,
-    },
-    razorLeaf:{
-        name: 'razor leaf',
-        power: 6,
-    }
-},);
-let readyPlayerOneDex = {
-
-};
-
-readyPlayerOneDex.charmander = udexCharmander;
-readyPlayerOneDex.squirtle = udexSquirtle;
-readyPlayerOneDex.bulbasaur = udexBulbasaur;
-
-let rivalDex = {
-
-};
-
-rivalDex.charmander = rdexCharmander;
-rivalDex.squirtle = rdexSquirtle;
-rivalDex.bulbasaur = rdexBulbasaur;
+},]
+]
+//creating separate pokedex objects for user and rival
+let readyPlayerOneDex = {};
+let rivalDex = {};
+//each item from pokedex is added to rival and user pokedex
+pokedex.forEach(element =>{
+    rivalDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
+    readyPlayerOneDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
+})
 
 //game object
 const gameObject ={
@@ -196,13 +146,13 @@ const gameObject ={
         gameObject.readyPlayerOne.starterElement.style.display = '';
         readyPlayerOneProfile.style.display = '';
         userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
-        userProfileLevel.innerText =  `level: ${gameObject.readyPlayerOne.starterObject.level}`;
+        userProfileLevel.innerText =  `lv: ${gameObject.readyPlayerOne.starterObject.level}`;
         userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
         //profiles rival
         gameObject.rival.starterElement.style.display = '';
         rivalProfile.style.display = 'block';
         rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
-        rivalProfileLevel.innerText =  `level: ${gameObject.rival.starterObject.level}`;
+        rivalProfileLevel.innerText =  `lv: ${gameObject.rival.starterObject.level}`;
         rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
     },
     battleCommence(){
@@ -313,14 +263,15 @@ const gameObject ={
             this.readyPlayerOne.starterObject.prevLevelExp = Math.round(this.readyPlayerOne.starterObject.prevLevelExp*1.2);
             console.log(this.readyPlayerOne.starterObject.prevLevelExp);
             titles.innerText = `${this.readyPlayerOne.starterObject.name} grew to level ${this.readyPlayerOne.starterObject.level}!`;
-            userProfileLevel.innerText = `level: ${this.readyPlayerOne.starterObject.level}`;
+            userProfileLevel.innerText = `lv: ${this.readyPlayerOne.starterObject.level}`;
             this.levelUpAnimation();
+            setTimeout(function(){
+                gameObject.replaySequence();
+            },1000*6)
         }else{
             console.log(`not time to level up yet`);
-        }
-        setTimeout(function(){
             gameObject.replaySequence();
-        },1000*6)
+        }
     },
     replaySequence(){
         titles.innerText = 'Ready to keep battling?';
@@ -360,7 +311,6 @@ const gameObject ={
         },1000*10)
     },
     rivalGenerator(){
-        setTimeout(function(){
             const rivalIndex = Math.floor(Math.random()* gameObject.trainers.length);
             gameObject.rival.rivalName = gameObject.trainers[rivalIndex];
             const starters = Object.keys(rivalDex);
@@ -375,7 +325,6 @@ const gameObject ={
                 }
             }
             gameObject.battleCommence();
-            }, 1000*2)
     },
     replayRival(){
         gameObject.rival.rivalName = 'Your Rival';
@@ -429,11 +378,14 @@ const hpAnimations = (user)=>{
 
 const pokeAnimations = (user)=>{
     if(! user.classList.contains('animate__animated')){
+        setTimeout(function(){
+            rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+        },1000*3);
         user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
+
     }
     else{
         user.classList.remove('animate__animated','animate__delay-3s','animate__shakeX');
-
         setTimeout(function(){
             user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
         },1000 *1);
@@ -466,7 +418,7 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
-        rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+
         pokeAnimations(rivalStarter);
         hpAnimations(rivalProfileHP);
     }
@@ -475,7 +427,6 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.rival.starterObject.name} used ${gameObject.rival.currentMove}`;
          //decrement rival hp
         gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
-        // userProfileHP.classList.add('animate__animated','animate__delay-4s','animate__bounce');
         setTimeout(function(){
             userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
             pokeAnimations(readyPlayerOneStarter);
