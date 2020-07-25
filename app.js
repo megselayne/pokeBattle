@@ -464,6 +464,7 @@ const reload = ()=>{
 }
 //music on load
 const audio =()=>{
+    document.querySelector("#audio").volume = .3;
     document.querySelector("#audio").play();
 };
 
