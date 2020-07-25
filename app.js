@@ -51,9 +51,9 @@ const gameObject ={
             maxHp: 25,
             level: 5,
             baseLevel: 5,
-            prevLevelExp: 30,
+            prevLevelExp: 20,
             baseExp: 1,
-            exp: 30,
+            exp: 1,
             color: 'red',
             moveset:{
                 tackle:{
@@ -80,7 +80,7 @@ const gameObject ={
             maxHp: 25,
             level: 5,
             baseLevel: 5,
-            prevLevelExp: 1,
+            prevLevelExp: 20,
             baseExp: 1,
             exp: 1,
             color: 'blue',
@@ -108,9 +108,9 @@ const gameObject ={
             maxHp: 25,
             level: 5,
             baseLevel: 5,
-            prevLevelExp: 30,
+            prevLevelExp: 20,
             baseExp: 1,
-            exp: 30,
+            exp: 1,
             color: 'green',
             moveset:{
                 tackle:{
@@ -265,9 +265,9 @@ const gameObject ={
     },
     expGain(){
         console.log(`gaining some exp!`);
-        this.readyPlayerOne.starterObject.exp += Math.round(this.rival.starterObject.exp /3);
+        this.readyPlayerOne.starterObject.exp += Math.round(this.rival.starterObject.prevLevelExp /3);
         console.log(this.readyPlayerOne.starterObject.exp);
-        titles.innerText = `${this.readyPlayerOne.starterObject.name} gained ${Math.round(this.rival.starterObject.exp /3)} exp!`;
+        titles.innerText = `${this.readyPlayerOne.starterObject.name} gained ${Math.round(this.rival.starterObject.prevLevelExp /3)} exp!`;
         setTimeout(function(){
             gameObject.expCheck();
         },1000*5)
