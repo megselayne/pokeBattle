@@ -462,10 +462,15 @@ const reload = ()=>{
         location.reload();
     }
 }
+//music on load
+const audio =()=>{
+    document.querySelector("#audio").play();
+};
 
 //event listeners
 pokeStarters.forEach(element=>{
     element.addEventListener('click',selectStarter);
+    element.addEventListener('click',audio);
 })
 battleButtonFight.addEventListener('click',gameObject.selectBattle);
 battleButtonRun.addEventListener('click',gameObject.home);
@@ -475,3 +480,4 @@ newGame.addEventListener('click',reload);
 replayTrainers.addEventListener('click',gameObject.rivalGenerator);
 replayRival.addEventListener('click',gameObject.replayRival);
 window.addEventListener('load',gameObject.setScore);
+
