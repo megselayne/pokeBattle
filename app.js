@@ -19,7 +19,7 @@ const userProfileHP = document.createElement('h4');
 const rivalProfilePName = document.createElement('h3');
 const rivalProfileLevel = document.createElement('h4');
 const rivalProfileHP = document.createElement('h4');
-const playByPlay = document.createElement('h3');
+const playByPlay = document.createElement('h2');
 const replayButtonYes = document.querySelector('.yes');
 const replayButtonNo = document.querySelector('.no');
 const replayButtons = document.querySelector('.replay-buttons');
@@ -146,13 +146,13 @@ const gameObject ={
         gameObject.readyPlayerOne.starterElement.style.display = '';
         readyPlayerOneProfile.style.display = '';
         userProfilePName.innerText = `${gameObject.readyPlayerOne.starterObject.name}`;
-        userProfileLevel.innerText =  `level: ${gameObject.readyPlayerOne.starterObject.level}`;
+        userProfileLevel.innerText =  `lv: ${gameObject.readyPlayerOne.starterObject.level}`;
         userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
         //profiles rival
         gameObject.rival.starterElement.style.display = '';
         rivalProfile.style.display = 'block';
         rivalProfilePName.innerText = `${gameObject.rival.starterObject.name}`;
-        rivalProfileLevel.innerText =  `level: ${gameObject.rival.starterObject.level}`;
+        rivalProfileLevel.innerText =  `lv: ${gameObject.rival.starterObject.level}`;
         rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
     },
     battleCommence(){
@@ -263,7 +263,7 @@ const gameObject ={
             this.readyPlayerOne.starterObject.prevLevelExp = Math.round(this.readyPlayerOne.starterObject.prevLevelExp*1.2);
             console.log(this.readyPlayerOne.starterObject.prevLevelExp);
             titles.innerText = `${this.readyPlayerOne.starterObject.name} grew to level ${this.readyPlayerOne.starterObject.level}!`;
-            userProfileLevel.innerText = `level: ${this.readyPlayerOne.starterObject.level}`;
+            userProfileLevel.innerText = `lv: ${this.readyPlayerOne.starterObject.level}`;
             this.levelUpAnimation();
             setTimeout(function(){
                 gameObject.replaySequence();
