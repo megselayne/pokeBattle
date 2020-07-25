@@ -52,7 +52,7 @@ class Pokemon {
 const pokedex = [['squirtle','water','grass','blue','./assets/squirtle.png', {
     tackle:{
         name: 'tackle',
-        power: 5,
+        power: 25,
     },
     bubble:{
         name: 'bubble',
@@ -92,9 +92,10 @@ const pokedex = [['squirtle','water','grass','blue','./assets/squirtle.png', {
     },
 },]
 ]
+//creating separate pokedex objects for user and rival
 let readyPlayerOneDex = {};
 let rivalDex = {};
-
+//each item from pokedex is added to rival and user pokedex
 pokedex.forEach(element =>{
     rivalDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
     readyPlayerOneDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
@@ -264,12 +265,13 @@ const gameObject ={
             titles.innerText = `${this.readyPlayerOne.starterObject.name} grew to level ${this.readyPlayerOne.starterObject.level}!`;
             userProfileLevel.innerText = `level: ${this.readyPlayerOne.starterObject.level}`;
             this.levelUpAnimation();
+            setTimeout(function(){
+                gameObject.replaySequence();
+            },1000*6)
         }else{
             console.log(`not time to level up yet`);
-        }
-        setTimeout(function(){
             gameObject.replaySequence();
-        },1000*6)
+        }
     },
     replaySequence(){
         titles.innerText = 'Ready to keep battling?';
@@ -309,7 +311,6 @@ const gameObject ={
         },1000*10)
     },
     rivalGenerator(){
-        setTimeout(function(){
             const rivalIndex = Math.floor(Math.random()* gameObject.trainers.length);
             gameObject.rival.rivalName = gameObject.trainers[rivalIndex];
             const starters = Object.keys(rivalDex);
@@ -324,7 +325,6 @@ const gameObject ={
                 }
             }
             gameObject.battleCommence();
-            }, 1000*2)
     },
     replayRival(){
         gameObject.rival.rivalName = 'Your Rival';
@@ -378,11 +378,14 @@ const hpAnimations = (user)=>{
 
 const pokeAnimations = (user)=>{
     if(! user.classList.contains('animate__animated')){
+        setTimeout(function(){
+            rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+        },1000*3);
         user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
+
     }
     else{
         user.classList.remove('animate__animated','animate__delay-3s','animate__shakeX');
-
         setTimeout(function(){
             user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
         },1000 *1);
@@ -415,7 +418,7 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
-        rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+
         pokeAnimations(rivalStarter);
         hpAnimations(rivalProfileHP);
     }
@@ -424,7 +427,6 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.rival.starterObject.name} used ${gameObject.rival.currentMove}`;
          //decrement rival hp
         gameObject.readyPlayerOne.starterObject.hp -= gameObject.rival.starterObject.moveset[gameObject.rival.currentMove].power;
-        // userProfileHP.classList.add('animate__animated','animate__delay-4s','animate__bounce');
         setTimeout(function(){
             userProfileHP.innerText = `hp: ${gameObject.readyPlayerOne.starterObject.hp}`;
             pokeAnimations(readyPlayerOneStarter);
