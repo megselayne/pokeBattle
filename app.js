@@ -52,7 +52,7 @@ class Pokemon {
 const pokedex = [['squirtle','water','grass','blue','./assets/squirtle.png', {
     tackle:{
         name: 'tackle',
-        power: 25,
+        power: 5,
     },
     bubble:{
         name: 'bubble',
@@ -298,7 +298,7 @@ const gameObject ={
             console.log(readyPlayerOneWins);
             score.innerHTML = readyPlayerOneWins;
             playByPlay.innerText = '';
-            titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! Rival blacked out! You win!`
+            titles.innerText = `Rival ${gameObject.rival.starterObject.name} fainted! ${gameObject.rival.rivalName} blacked out! You win!`
         }else{
             gameObject.readyPlayerOne.starterElement.style.display = 'none';
             readyPlayerOneProfile.style.display = 'none';
@@ -378,9 +378,9 @@ const hpAnimations = (user)=>{
 
 const pokeAnimations = (user)=>{
     if(! user.classList.contains('animate__animated')){
-        setTimeout(function(){
-            rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
-        },1000*3);
+        // setTimeout(function(){
+        //     rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`;
+        // },1000*3);
         user.classList.add('animate__animated','animate__delay-3s','animate__shakeX');
 
     }
@@ -418,7 +418,7 @@ const actionStart =(event)=>{
         playByPlay.innerText = `${gameObject.readyPlayerOne.starterObject.name} used ${event.target.innerText}`;
          //decrement rival hp
         gameObject.rival.starterObject.hp -= gameObject.readyPlayerOne.starterObject.moveset[event.target.innerText].power;
-
+        rivalProfileHP.innerText = `hp: ${gameObject.rival.starterObject.hp}`
         pokeAnimations(rivalStarter);
         hpAnimations(rivalProfileHP);
     }
