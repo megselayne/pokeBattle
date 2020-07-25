@@ -49,22 +49,7 @@ class Pokemon {
     }        
 
 }
-//user pokedex
-let udexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
-    tackle:{
-        name: 'tackle',
-        power: 5,
-    },
-    ember:{
-        name: 'ember',
-        power: 4,
-    },
-    slash:{
-        name: 'slash',
-        power: 6,
-    },
-});
-let udexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
+const pokedex = [['squirtle','water','grass','blue','./assets/squirtle.png', {
     tackle:{
         name: 'tackle',
         power: 5,
@@ -77,8 +62,8 @@ let udexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squir
         name: 'bubble',
         power: 6,
     },
-},);
-let udexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
+},],
+['bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
     tackle:{
         name: 'tackle',
         power: 5,
@@ -91,9 +76,8 @@ let udexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulb
         name: 'razor leaf',
         power: 6,
     }
-},);
-//rival pokedex
-let rdexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
+},],
+['charmander','fire','water','red','./assets/charmander.png',{
     tackle:{
         name: 'tackle',
         power: 5,
@@ -106,50 +90,15 @@ let rdexCharmander = new Pokemon('charmander','fire','water','red','./assets/cha
         name: 'slash',
         power: 6,
     },
-});
-let rdexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
-    tackle:{
-        name: 'tackle',
-        power: 5,
-    },
-    bubble:{
-        name: 'bubble',
-        power: 4,
-    },
-    bite:{
-        name: 'bubble',
-        power: 6,
-    },
-},);
-let rdexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
-    tackle:{
-        name: 'tackle',
-        power: 5,
-    },
-    vineWhip:{
-        name: 'vine whip',
-        power: 5,
-    },
-    razorLeaf:{
-        name: 'razor leaf',
-        power: 6,
-    }
-},);
-let readyPlayerOneDex = {
+},]
+]
+let readyPlayerOneDex = {};
+let rivalDex = {};
 
-};
-
-readyPlayerOneDex.charmander = udexCharmander;
-readyPlayerOneDex.squirtle = udexSquirtle;
-readyPlayerOneDex.bulbasaur = udexBulbasaur;
-
-let rivalDex = {
-
-};
-
-rivalDex.charmander = rdexCharmander;
-rivalDex.squirtle = rdexSquirtle;
-rivalDex.bulbasaur = rdexBulbasaur;
+pokedex.forEach(element =>{
+    rivalDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
+    readyPlayerOneDex[element[0]] = new Pokemon(element[0],element[1],element[2],element[3],element[4],element[5]);
+})
 
 //game object
 const gameObject ={
