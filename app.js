@@ -29,6 +29,127 @@ const replayTrainers = document.querySelector('.trainers');
 const newGame = document.querySelector('.reset');
 const score = document.querySelector('.score-target');
 let readyPlayerOneWins = 0;
+//Pokedex and object creators via class
+class Pokemon {
+    constructor(name,type,weakness,color,image,moveset) {
+            this.name = name;
+            this.type = type;
+            this.weakness = weakness;
+            this.hp = 25;
+            this.maxHp = 25;
+            this.level = 5;
+            this.baseLevel = 5;
+            this.basePrevLevelExp = 20;
+            this.prevLevelExp = 20;
+            this.baseExp = 1;
+            this.exp= 1;
+            this.color = color;
+            this.image = image;
+            this.moveset = moveset;
+    }        
+
+}
+//user pokedex
+let udexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    ember:{
+        name: 'ember',
+        power: 4,
+    },
+    slash:{
+        name: 'slash',
+        power: 6,
+    },
+});
+let udexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    bubble:{
+        name: 'bubble',
+        power: 4,
+    },
+    bite:{
+        name: 'bubble',
+        power: 6,
+    },
+},);
+let udexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    vineWhip:{
+        name: 'vine whip',
+        power: 5,
+    },
+    razorLeaf:{
+        name: 'razor leaf',
+        power: 6,
+    }
+},);
+//rival pokedex
+let rdexCharmander = new Pokemon('charmander','fire','water','red','./assets/charmander.png',{
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    ember:{
+        name: 'ember',
+        power: 4,
+    },
+    slash:{
+        name: 'slash',
+        power: 6,
+    },
+});
+let rdexSquirtle = new Pokemon('squirtle','water','grass','blue','./assets/squirtle.png', {
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    bubble:{
+        name: 'bubble',
+        power: 4,
+    },
+    bite:{
+        name: 'bubble',
+        power: 6,
+    },
+},);
+let rdexBulbasaur= new Pokemon('bulbasaur','grass','fire','green','./assets/bulbasaur.png', {
+    tackle:{
+        name: 'tackle',
+        power: 5,
+    },
+    vineWhip:{
+        name: 'vine whip',
+        power: 5,
+    },
+    razorLeaf:{
+        name: 'razor leaf',
+        power: 6,
+    }
+},);
+let readyPlayerOneDex = {
+
+};
+
+readyPlayerOneDex.charmander = udexCharmander;
+readyPlayerOneDex.squirtle = udexSquirtle;
+readyPlayerOneDex.bulbasaur = udexBulbasaur;
+
+let rivalDex = {
+
+};
+
+rivalDex.charmander = rdexCharmander;
+rivalDex.squirtle = rdexSquirtle;
+rivalDex.bulbasaur = rdexBulbasaur;
 
 //game object
 const gameObject ={
@@ -41,94 +162,6 @@ const gameObject ={
         }
     },
     trainers: ['Youngster Billy','Ace Trainer Lucy','Scientist Ned'],
-    starters:{
-        charmander:{
-            trainer: 'Red',
-            name: 'charmander',
-            type: 'fire',
-            weakness: 'water',
-            hp: 25,
-            maxHp: 25,
-            level: 5,
-            baseLevel: 5,
-            prevLevelExp: 20,
-            baseExp: 1,
-            exp: 1,
-            color: 'red',
-            moveset:{
-                tackle:{
-                    name: 'tackle',
-                    power: 5,
-                },
-                ember:{
-                    name: 'ember',
-                    power: 4,
-                },
-                slash:{
-                    name: 'slash',
-                    power: 6,
-                },
-            },
-            image: './assets/charmander.png',
-        },
-        squirtle:{
-            trainer: 'Blue',
-            name: 'squirtle',
-            type: 'water',
-            weakness: 'grass',
-            hp: 25,
-            maxHp: 25,
-            level: 5,
-            baseLevel: 5,
-            prevLevelExp: 20,
-            baseExp: 1,
-            exp: 1,
-            color: 'blue',
-            moveset:{
-                tackle:{
-                    name: 'tackle',
-                    power: 5,
-                },
-                bubble:{
-                    name: 'bubble',
-                    power: 4,
-                },
-                bite:{
-                    name: 'bubble',
-                    power: 6,
-                },
-            },
-            image: './assets/squirtle.png',
-        },
-        bulbasaur:{
-            name: 'bulbasaur',
-            type: 'grass',
-            weakness: 'fire',
-            hp: 25,
-            maxHp: 25,
-            level: 5,
-            baseLevel: 5,
-            prevLevelExp: 20,
-            baseExp: 1,
-            exp: 1,
-            color: 'green',
-            moveset:{
-                tackle:{
-                    name: 'tackle',
-                    power: 5,
-                },
-                vineWhip:{
-                    name: 'vine whip',
-                    power: 5,
-                },
-                razorLeaf:{
-                    name: 'razor leaf',
-                    power: 6,
-                }
-            },
-            image: './assets/bulbasaur.png',
-        }
-    },
     readyPlayerOne:{
         starterObject: null,
         currentMove: null,
@@ -180,11 +213,11 @@ const gameObject ={
         },1000 *4)
     },
     rivalSelection(){
-        const userWeakness = this.starters[this.readyPlayerOne.starterName].weakness;
+        const userWeakness = rivalDex[this.readyPlayerOne.starterName].weakness;
         console.log(userWeakness);
-        for(let i of Object.keys(this.starters)){
-            if(this.starters[i].type === userWeakness){
-                this.rival.starterObject = this.starters[i];
+        for(let i of Object.keys(rivalDex)){
+            if(rivalDex[i].type === userWeakness){
+                this.rival.starterObject = rivalDex[i];
                 this.rival.starterElement = rivalStarter;
                 document.querySelector('img#rival').setAttribute('src', this.rival.starterObject.image);
             }
@@ -292,7 +325,7 @@ const gameObject ={
     replaySequence(){
         titles.innerText = 'Ready to keep battling?';
         replayButtons.style.display = 'flex';
-        console.log(this.starters[this.readyPlayerOne.starterObject.name].hp);
+        // console.log(this.starters[this.readyPlayerOne.starterObject.name].hp);
     },
     setScore(){
         if(localStorage.getItem('scoreKeeper')){
@@ -330,11 +363,11 @@ const gameObject ={
         setTimeout(function(){
             const rivalIndex = Math.floor(Math.random()* gameObject.trainers.length);
             gameObject.rival.rivalName = gameObject.trainers[rivalIndex];
-            const starters = Object.keys(gameObject.starters)
+            const starters = Object.keys(rivalDex);
             const id = starters[rivalIndex];
             for(let i of starters){
-                if(gameObject.starters[i].name === id){
-                    gameObject.rival.starterObject = gameObject.starters[i];
+                if(rivalDex[i].name === id){
+                    gameObject.rival.starterObject = rivalDex[i];
                     rivalStarter.childNodes[1].setAttribute('src',gameObject.rival.starterObject.image);
                     gameObject.rival.starterObject.hp = gameObject.rival.starterObject.maxHp;
                     gameObject.readyPlayerOne.starterObject.hp = gameObject.readyPlayerOne.starterObject.maxHp;
@@ -414,6 +447,7 @@ const actionStart =(event)=>{
     battleBox.style.justifyContent = 'center';
     if(! attackVis.classList.contains('animation')){
         attackVis.classList.add('animation');
+        attackVis.style.backgroundColor = gameObject[gameObject.turn].starterObject.color;
         attackVis.style.removeProperty('right');
         attackVis.style.setProperty('left','15%');
     }
@@ -460,9 +494,9 @@ const selectStarter = (event)=>{
     pokeStarters.forEach(element=>{
         element.removeEventListener('click',selectStarter);
     })
-    for(let i of Object.keys(gameObject.starters)){
-        if(gameObject.starters[i].name === id){
-            gameObject.readyPlayerOne.starterObject = gameObject.starters[i];
+    for(let i of Object.keys(readyPlayerOneDex)){
+        if(readyPlayerOneDex[i].name === id){
+            gameObject.readyPlayerOne.starterObject = readyPlayerOneDex[i];
             console.log(gameObject.readyPlayerOne.starterObject);
         }
     }
